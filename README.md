@@ -1,5 +1,5 @@
 # transport
-Finite volume solver for advection-diffusion equatio
+Finite volume solver for advection-diffusion equation
 
 Dependencies
 ------------
