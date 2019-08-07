@@ -8,7 +8,7 @@ Dependencies
 wxWidgets is a library for creating graphical user interfaces for cross-platform applications.
 
 
-[Eigen] (http://eigen.tuxfamily.org/index.php?title=Main_Page)
+[Eigen](http://eigen.tuxfamily.org/index.php?title=Main_Page)
 Eigen is a C++ template library for linear algebra: matrices, vectors, numerical solvers, and related algorithms.
 
 Install dependency packages (Ubuntu):
