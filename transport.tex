@@ -5,11 +5,36 @@
 \usepackage[latin9]{inputenc}
 \usepackage{babel}
 \begin{document}
+
+\section*{Transport equation}
+
 The convection-diffusion equation for the transport of temperature
 \textit{T} is
 
 \begin{equation}
 \frac{\partial T}{\partial t}=-U\frac{\partial T}{\partial x}+k\frac{\partial}{\partial x}(\frac{\partial T}{\partial x})+S
 \end{equation}
+For a non existing convection case, Equation (1) becomes the diffusion
+Equation
+
+\begin{equation}
+\frac{\partial T}{\partial t}=k\frac{\partial}{\partial x}(\frac{\partial T}{\partial x})+S
+\end{equation}
+that, for a steady-state, is 
+
+\begin{equation}
+0=k\frac{\partial}{\partial x}(\frac{\partial T}{\partial x})+S
+\end{equation}
+These equations are solved by a Finite Volume Method (FVM) and by
+a Finite Difference Method (FDM). 
+
+\section*{References}
+\begin{enumerate}
+\item Computational Fluid Dynamics Fundamentals Course. A. Wimshurst. 2019. 
+\item An Introduction to Computational Fluid Dynamics: The Finite Volume
+Method. H. Versteeg, W. Malalasekera. 2007.
+\item Finite Difference Computing with PDEs. A Modern Software Approach.
+H. Langtangen, S. Linge. 2016.
+\end{enumerate}
 
 \end{document}

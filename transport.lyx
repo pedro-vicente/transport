@@ -75,6 +75,10 @@
 
 \begin_body
 
+\begin_layout Section*
+Transport equation
+\end_layout
+
 \begin_layout Standard
 The convection-diffusion equation for the transport of temperature 
 \shape italic
@@ -91,7 +95,60 @@ T
 
 \end_inset
 
+For a non existing convection case, Equation (1) becomes the diffusion Equation
+\end_layout
 
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial T}{\partial t}=k\frac{\partial}{\partial x}(\frac{\partial T}{\partial x})+S
+\end{equation}
+
+\end_inset
+
+that, for a steady-state, is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+0=k\frac{\partial}{\partial x}(\frac{\partial T}{\partial x})+S
+\end{equation}
+
+\end_inset
+
+These equations are solved by a Finite Volume Method (FVM) and by a Finite
+ Difference Method (FDM).
+ 
+\end_layout
+
+\begin_layout Section*
+References
+\end_layout
+
+\begin_layout Enumerate
+Computational Fluid Dynamics Fundamentals Course.
+ A.
+ Wimshurst.
+ 2019.
+ 
+\end_layout
+
+\begin_layout Enumerate
+An Introduction to Computational Fluid Dynamics: The Finite Volume Method.
+ H.
+ Versteeg, W.
+ Malalasekera.
+ 2007.
+\end_layout
+
+\begin_layout Enumerate
+Finite Difference Computing with PDEs.
+ A Modern Software Approach.
+ H.
+ Langtangen, S.
+ Linge.
+ 2016.
 \end_layout
 
 \end_body
