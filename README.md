@@ -1,5 +1,5 @@
 # transport
-Finite volume solver for advection-diffusion equation
+Finite volume solver and finite differences for the advection-diffusion equation.
 
 Dependencies
 ------------
@@ -23,11 +23,12 @@ Get source:
 git clone https://github.com/pedro-vicente/transport.git
 </pre>
 
-Build with:
+Build and run with:
 <pre>
 autoreconf -vfi
 ./configure
 make
+./transport
 </pre>
 
 
