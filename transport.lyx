@@ -12,7 +12,7 @@
 \inputencoding auto
 \fontencoding global
 \font_roman "default" "default"
-\font_sans "default" "default"
+\font_sans "cmss" "default"
 \font_typewriter "default" "default"
 \font_math "auto" "auto"
 \font_default_family default
@@ -29,6 +29,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +45,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -95,7 +97,17 @@ T
 
 \end_inset
 
-For a non existing convection case, Equation (1) becomes the diffusion Equation
+where 
+\shape italic
+U
+\shape default
+ is velocity and 
+\shape italic
+S
+\shape default
+ a source term.
+ For a non existing convection case, Equation (1) becomes the diffusion
+ Equation
 \end_layout
 
 \begin_layout Standard
@@ -120,6 +132,173 @@ that, for a steady-state, is
 These equations are solved by a Finite Volume Method (FVM) and by a Finite
  Difference Method (FDM).
  
+\end_layout
+
+\begin_layout Section*
+Finite Volume Method 
+\end_layout
+
+\begin_layout Standard
+In the Finite Volume Method, values for the above diferential equations
+ are calculated at discrete places on a grid of volumes, shown in Figure
+ 1, where temperature at the center of a cell is 
+\shape italic
+T
+\size scriptsize
+P
+\shape default
+\size default
+, and 
+\shape italic
+T
+\size scriptsize
+R
+\shape default
+\size default
+ e 
+\shape italic
+T
+\size scriptsize
+L
+\shape default
+\size default
+ is temperature at the border between cells, right and left.
+ Integrating Equation 3 over a cell volume, and considering the rate of
+ accumulation over the volume 
+\shape italic
+V
+\shape default
+ equal to the flow across the surfaces of the control volume, Equation (6),
+ where 
+\shape italic
+n
+\shape default
+ is the unit normal vector pointing out of the control volume and 
+\shape italic
+A
+\shape default
+ is the cross sectional area of the volume.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int\left[k\frac{\partial}{\partial x}(\frac{\partial T}{\partial x})+S\right]dV=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int\left[\frac{\partial}{\partial x}(k\frac{\partial T}{\partial x})dV\right]+SV=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\int(k\frac{\partial T}{\partial x}n)dA+SV=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+Equation (6) is written in terms of the flux leaving the right face 
+\shape italic
+r
+\shape default
+ minux the flux entering the left face 
+\shape italic
+l
+\shape default
+ in Figure (1)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+(kA\frac{\partial T}{\partial x})_{r}-(kA\frac{\partial T}{\partial x})_{l}+SV=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename figure_1.svg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+Figure 1
+\series default
+: Temperature at center of cell, and on left and right cell borders.
+\end_layout
+
+\begin_layout Standard
+\noindent
+Equation (7) for the temperature gradient at the boundaries is dicretized
+ in terms of the temperature at the cell centers, where 
+\begin_inset Formula $\Delta x$
+\end_inset
+
+ is the distance between cell centers
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+kA\frac{T_{R}-T_{P}}{\Delta x}-kA\frac{T_{P}-T_{L}}{\Delta x}+SV=0
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+An individual set of equations is made for each cell.
+\end_layout
+
+\begin_layout Section*
+Finite Difference Method
+\end_layout
+
+\begin_layout Standard
+The diffusion equation (2) is approximated by finite differences with 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{T_{i}^{n+1}-T_{i}^{n}}{\varDelta x}=k\frac{T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n}}{\varDelta x^{2}}+S_{i}^{n}
+\end{equation}
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
