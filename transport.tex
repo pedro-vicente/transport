@@ -3,7 +3,7 @@
 \documentclass[english]{article}
 \renewcommand{\sfdefault}{cmss}
 \usepackage[T1]{fontenc}
-\usepackage[latin9]{luainputenc}
+\usepackage[latin9]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{babel}
@@ -35,7 +35,17 @@ a Finite Difference Method (FDM).
 
 In the Finite Volume Method, values for the above diferential equations
 are calculated at discrete places on a grid of volumes, shown in Figure
-1, where temperature at the center of a cell is \textit{T}\textit{\scriptsize{}P},
+1,
+\begin{center}
+\includegraphics{figure_1}
+\par\end{center}
+
+\begin{center}
+\textbf{Figure 1}: Temperature at center of cell, and on left and
+right cell borders.
+\par\end{center}
+
+\noindent where temperature at the center of a cell is \textit{T}\textit{\scriptsize{}P},
 and \textit{T}\textit{\scriptsize{}R} e \textit{T}\textit{\scriptsize{}L}
 is temperature at the border between cells, right and left. Integrating
 Equation 3 over a cell volume, and considering the rate of accumulation
@@ -57,21 +67,12 @@ sectional area of the volume.
 \end{equation}
 
 \noindent Equation (6) is written in terms of the flux leaving the
-right face \textit{r} minux the flux entering the left face \textit{l}
+right face \textit{r} minus the flux entering the left face \textit{l}
 in Figure (1)
 
 \begin{equation}
 (kA\frac{\partial T}{\partial x})_{r}-(kA\frac{\partial T}{\partial x})_{l}+SV=0
 \end{equation}
-
-\begin{center}
-\includegraphics{figure_1}
-\par\end{center}
-
-\begin{center}
-\textbf{Figure 1}: Temperature at center of cell, and on left and
-right cell borders.
-\par\end{center}
 
 \noindent Equation (7) for the temperature gradient at the boundaries
 is dicretized in terms of the temperature at the cell centers, where

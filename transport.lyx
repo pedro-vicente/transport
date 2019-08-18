@@ -141,7 +141,35 @@ Finite Volume Method
 \begin_layout Standard
 In the Finite Volume Method, values for the above diferential equations
  are calculated at discrete places on a grid of volumes, shown in Figure
- 1, where temperature at the center of a cell is 
+ 1,
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename figure_1.svg
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\series bold
+Figure 1
+\series default
+: Temperature at center of cell, and on left and right cell borders.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+where temperature at the center of a cell is 
 \shape italic
 T
 \size scriptsize
@@ -219,7 +247,7 @@ Equation (6) is written in terms of the flux leaving the right face
 \shape italic
 r
 \shape default
- minux the flux entering the left face 
+ minus the flux entering the left face 
 \shape italic
 l
 \shape default
@@ -235,25 +263,6 @@ l
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename figure_1.svg
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-
-\series bold
-Figure 1
-\series default
-: Temperature at center of cell, and on left and right cell borders.
 \end_layout
 
 \begin_layout Standard
