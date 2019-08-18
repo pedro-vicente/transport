@@ -146,9 +146,8 @@ In the Finite Volume Method, values for the above diferential equations
 
 \begin_layout Standard
 \align center
-\begin_inset External
-	template PDFPages
-	filename figure_1.pdf
+\begin_inset Graphics
+	filename figure_1.svg
 
 \end_inset
 
