@@ -164,10 +164,6 @@ Figure 1
 \end_layout
 
 \begin_layout Standard
-
-\end_layout
-
-\begin_layout Standard
 \noindent
 where temperature at the center of a cell is 
 \shape italic
@@ -176,7 +172,21 @@ T
 P
 \shape default
 \size default
-, and 
+, 
+\shape italic
+T
+\size scriptsize
+r
+\shape default
+\size default
+ e 
+\shape italic
+T
+\size scriptsize
+l
+\shape default
+\size default
+ is temperature at the border between cells, right and left, 
 \shape italic
 T
 \size scriptsize
@@ -190,7 +200,7 @@ T
 L
 \shape default
 \size default
- is temperature at the border between cells, right and left.
+ is temperature at the right and left cell centers.
  Integrating Equation 3 over a cell volume, and considering the rate of
  accumulation over the volume 
 \shape italic
