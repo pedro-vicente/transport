@@ -76,14 +76,50 @@ in Figure (1)
 \end{equation}
 
 \noindent Equation (7) for the temperature gradient at the boundaries
-is dicretized in terms of the temperature at the cell centers, where
+is discretized in terms of the temperature at the cell centers, where
 $\Delta x$ is the distance between cell centers
 
 \begin{equation}
 kA\frac{T_{R}-T_{P}}{\Delta x}-kA\frac{T_{P}-T_{L}}{\Delta x}+SV=0
 \end{equation}
 
-\noindent An individual set of equations is made for each cell.
+\noindent Solving Equation (8) for \textit{T}$_{P}$ and making an
+individual set of equations for each cell results in a system of equations
+of the form
+
+\begin{equation}
+-\frac{kA}{\Delta x}T_{P-1}+2\frac{kA}{\Delta x}T_{P}-\frac{kA}{\Delta x}T_{P+1}=SV
+\end{equation}
+
+\noindent for each grid position except the first and last volumes
+in the grid. For the first and last volumes in the grid, the temperature
+T$_{A}$ and T$_{B}$ at the borders is also considered, as well as
+a half distance to the border. In matrix form, where the first and
+last row are the two special border cases:
+
+\begin{equation}
+\left[\begin{array}{ccccc}
+\frac{kA}{\Delta x}+\frac{kA}{0.5\Delta x} & -\frac{kA}{\Delta x} & 0 & 0 & 0\\
+-\frac{kA}{\Delta x} & 2\frac{kA}{\Delta x} & -\frac{kA}{\Delta x} & 0 & 0\\
+0 & -\frac{kA}{\Delta x} & 2\frac{kA}{\Delta x} & -\frac{kA}{\Delta x} & 0\\
+0 & 0 & -\frac{kA}{\Delta x} & 2\frac{kA}{\Delta x} & -\frac{kA}{\Delta x}\\
+0 & 0 & 0 & -\frac{kA}{\Delta x} & \frac{kA}{\Delta x}+\frac{kA}{0.5\Delta x}
+\end{array}\right]\left[\begin{array}{c}
+T_{1}\\
+T_{P-1}\\
+T_{P}\\
+T_{P+1}\\
+T_{N}
+\end{array}\right]=\left[\begin{array}{c}
+SV+T_{A}\frac{kA}{0.5\Delta x}\\
+SV\\
+SV\\
+SV\\
+SV+T_{B}\frac{kA}{0.5\Delta x}
+\end{array}\right]
+\end{equation}
+
+\noindent This matrix is solved for the vector of temperatures \textit{T}.
 
 \section*{Finite Difference Method}
 

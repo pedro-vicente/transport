@@ -277,7 +277,7 @@ l
 
 \begin_layout Standard
 \noindent
-Equation (7) for the temperature gradient at the boundaries is dicretized
+Equation (7) for the temperature gradient at the boundaries is discretized
  in terms of the temperature at the cell centers, where 
 \begin_inset Formula $\Delta x$
 \end_inset
@@ -298,7 +298,81 @@ kA\frac{T_{R}-T_{P}}{\Delta x}-kA\frac{T_{P}-T_{L}}{\Delta x}+SV=0
 
 \begin_layout Standard
 \noindent
-An individual set of equations is made for each cell.
+Solving Equation (8) for 
+\shape italic
+T
+\shape default
+
+\begin_inset Formula $_{P}$
+\end_inset
+
+ and making an individual set of equations for each cell results in a system
+ of equations of the form
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+-\frac{kA}{\Delta x}T_{P-1}+2\frac{kA}{\Delta x}T_{P}-\frac{kA}{\Delta x}T_{P+1}=SV
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+for each grid position except the first and last volumes in the grid.
+ For the first and last volumes in the grid, the temperature T
+\begin_inset Formula $_{A}$
+\end_inset
+
+ and T
+\begin_inset Formula $_{B}$
+\end_inset
+
+ at the borders is also considered, as well as a half distance to the border.
+ In matrix form, where the first and last row are the two special border
+ cases:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\left[\begin{array}{ccccc}
+\frac{kA}{\Delta x}+\frac{kA}{0.5\Delta x} & -\frac{kA}{\Delta x} & 0 & 0 & 0\\
+-\frac{kA}{\Delta x} & 2\frac{kA}{\Delta x} & -\frac{kA}{\Delta x} & 0 & 0\\
+0 & -\frac{kA}{\Delta x} & 2\frac{kA}{\Delta x} & -\frac{kA}{\Delta x} & 0\\
+0 & 0 & -\frac{kA}{\Delta x} & 2\frac{kA}{\Delta x} & -\frac{kA}{\Delta x}\\
+0 & 0 & 0 & -\frac{kA}{\Delta x} & \frac{kA}{\Delta x}+\frac{kA}{0.5\Delta x}
+\end{array}\right]\left[\begin{array}{c}
+T_{1}\\
+T_{P-1}\\
+T_{P}\\
+T_{P+1}\\
+T_{N}
+\end{array}\right]=\left[\begin{array}{c}
+SV+T_{A}\frac{kA}{0.5\Delta x}\\
+SV\\
+SV\\
+SV\\
+SV+T_{B}\frac{kA}{0.5\Delta x}
+\end{array}\right]
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+This matrix is solved for the vector of temperatures 
+\shape italic
+T
+\shape default
+.
 \end_layout
 
 \begin_layout Section*
