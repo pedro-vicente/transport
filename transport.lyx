@@ -129,6 +129,27 @@ that, for a steady-state, is
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The diffusion process can also be ignored, resulting on a advection equation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial T}{\partial t}=-U\frac{\partial T}{\partial x}+S
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
 These equations are solved by a Finite Volume Method (FVM) and by a Finite
  Difference Method (FDM).
  
@@ -379,14 +400,92 @@ T
 Finite Difference Method
 \end_layout
 
+\begin_layout Subsection*
+Diffusion equation
+\end_layout
+
 \begin_layout Standard
-The diffusion equation (2) is approximated by finite differences with 
+\noindent
+The diffusion equation (2) 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-\frac{T_{i}^{n+1}-T_{i}^{n}}{\varDelta x}=k\frac{T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n}}{\varDelta x^{2}}+S_{i}^{n}
+\frac{\partial T}{\partial t}=k\frac{\partial^{2}T}{\partial x^{2}}+S
+\end{equation}
+
+\end_inset
+
+can be approximated by finite differences with a forward difference in time
+ and a central difference in space scheme.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{T_{i}^{n+1}-T_{i}^{n}}{\varDelta t}=k\frac{T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n}}{\varDelta x^{2}}+S_{i}^{n}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+that can be solved for the temperature at the next time step 
+\shape italic
+T
+\shape default
+
+\begin_inset Formula $^{n+1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+T_{i}^{n+1}=T_{i}^{n}+k\frac{\varDelta t}{\varDelta x^{2}}(T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n})+S_{i}^{n}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Advection equation
+\end_layout
+
+\begin_layout Standard
+\noindent
+The advection equation (4), without source term is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{\partial T}{\partial t}=-U\frac{\partial T}{\partial x}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+and it can be approximated by finite differences with a forward difference
+ in time and a upwind difference in space
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\frac{T_{i}^{n+1}-T_{i}^{n}}{\varDelta t}=-U\frac{T_{i}^{n}-T_{i-1}^{n}}{\varDelta x}
 \end{equation}
 
 \end_inset

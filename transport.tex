@@ -123,10 +123,23 @@ SV+T_{B}\frac{kA}{0.5\Delta x}
 
 \section*{Finite Difference Method}
 
-The diffusion equation (2) is approximated by finite differences with 
+The diffusion equation (2) 
 
 \begin{equation}
-\frac{T_{i}^{n+1}-T_{i}^{n}}{\varDelta x}=k\frac{T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n}}{\varDelta x^{2}}+S_{i}^{n}
+\frac{\partial T}{\partial t}=k\frac{\partial^{2}T}{\partial x^{2}}+S
+\end{equation}
+can be approximated by finite differences with a forward difference
+in time and a central difference in space scheme.
+
+\begin{equation}
+\frac{T_{i}^{n+1}-T_{i}^{n}}{\varDelta t}=k\frac{T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n}}{\varDelta x^{2}}+S_{i}^{n}
+\end{equation}
+
+\noindent that can be solved for the temperature at the next time
+step \textit{T}$^{n+1}$
+
+\begin{equation}
+T_{i}^{n+1}=T_{i}^{n}+k\frac{\varDelta t}{\varDelta x^{2}}(T_{i-1}^{n}-2T_{i}^{n}+T_{i+1}^{n})+S_{i}^{n}
 \end{equation}
 
 

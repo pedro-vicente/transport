@@ -32,15 +32,18 @@ public:
 
   ~wxFrameHeat()
   {
-    delete[] m_T;
-    delete[] T;
-    delete[] Tn;
+    delete[] T_fvm;
+    delete[] T_fdm_1;
+    delete[] Tn_fdm_1;
+    delete[] T_fdm_2;
+    delete[] Tn_fdm_2;
   }
 
 private:
   void init_constants();
   void solve_fvm();
-  void solve_fdm();
+  void solve_fdm_1();
+  void solve_fdm_2();
   void draw_cell(wxDC* dc, float N, wxCoord x, wxCoord y, wxCoord width, wxCoord height);
 
   //temperature at the left hand side of the bar(deg C)
@@ -63,7 +66,7 @@ private:
   Index m_nbr_fvm;
 
   //temperature (solution)
-  float* m_T;
+  float* T_fvm;
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //FDM
@@ -73,8 +76,12 @@ private:
   int m_nbr_fdm;
 
   //temperature (solution)
-  float* T;
-  float* Tn;
+  float* T_fdm_1;
+  float* Tn_fdm_1;
+
+  //temperature (solution)
+  float* T_fdm_2;
+  float* Tn_fdm_2;
 
 private:
   wxDECLARE_EVENT_TABLE();
@@ -122,7 +129,8 @@ wxFrameHeat::wxFrameHeat(const wxString& title)
   SetStatusText("Ready");
   init_constants();
   solve_fvm();
-  solve_fdm();
+  solve_fdm_1();
+  solve_fdm_2();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,20 +200,31 @@ void wxFrameHeat::OnPaint(wxPaintEvent&)
   //interior
   for (int idx = 0; idx < m_nbr_fvm; idx++)
   {
-    draw_cell(&dc, m_T[idx], x, y, width, height);
+    draw_cell(&dc, T_fvm[idx], x, y, width, height);
     x += width;
   }
   //boundary
   draw_cell(&dc, T_B, x, y, width, height);
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-  //FDM
+  //FDM_1
   /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  x = 0; y = height + 100;
+  x = 0; y += 100;
   for (int idx = 0; idx < m_nbr_fdm; idx++)
   {
-    draw_cell(&dc, T[idx], x, y, width, height);
+    draw_cell(&dc, T_fdm_1[idx], x, y, width, height);
+    x += width;
+  }
+
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+  //FDM_2
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  x = 0; y += 100;
+  for (int idx = 0; idx < m_nbr_fdm; idx++)
+  {
+    draw_cell(&dc, T_fdm_2[idx], x, y, width, height);
     x += width;
   }
 }
@@ -244,7 +263,7 @@ void wxFrameHeat::solve_fvm()
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
  //FVM
-  m_T = new float[m_nbr_fvm];
+  T_fvm = new float[m_nbr_fvm];
 
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   //geometry
@@ -411,7 +430,7 @@ void wxFrameHeat::solve_fvm()
   float* t = T_vec.data();
   for (int idx = 0; idx < m_nbr_fvm; idx++)
   {
-    m_T[idx] = t[idx];
+    T_fvm[idx] = t[idx];
     wxLogDebug("%.1f", t[idx]);
   }
 
@@ -423,11 +442,12 @@ void wxFrameHeat::solve_fvm()
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
-//wxFrameHeat::solve_fvm
+//wxFrameHeat::solve_fdm_1
 //Finite Differences Method
+//diffusion only
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void wxFrameHeat::solve_fdm()
+void wxFrameHeat::solve_fdm_1()
 {
   //number of cells
   m_nbr_fdm = 7;
@@ -437,8 +457,8 @@ void wxFrameHeat::solve_fdm()
  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //FDM
-  T = new float[m_nbr_fdm];
-  Tn = new float[m_nbr_fdm];
+  T_fdm_1 = new float[m_nbr_fdm];
+  Tn_fdm_1 = new float[m_nbr_fdm];
 
   //time step
   float dt = 0.005f;
@@ -447,32 +467,91 @@ void wxFrameHeat::solve_fdm()
   //initial and boundary values
   for (int i = 0; i < m_nbr_fdm; i++)
   {
-    T[i] = 0;
+    T_fdm_1[i] = 0;
   }
-  T[0] = T_A;
-  T[m_nbr_fdm - 1] = T_B;
+  T_fdm_1[0] = T_A;
+  T_fdm_1[m_nbr_fdm - 1] = T_B;
 
   for (int i = 0; i < m_nbr_fdm; i++)
   {
-    wxLogDebug("T[%d]=%.1f", i, T[i]);
+    wxLogDebug("T[%d]=%.1f", i, T_fdm_1[i]);
   }
 
   //F must be <= 0.5
   float F = k * dt / (dx * dx);
-  wxLogDebug("F=%.1f", F);
+  wxLogDebug("F=%.4f", F);
   for (int n = 0; n < 100; n++)
   {
     for (int i = 1; i < m_nbr_fdm - 1; i++)
     {
-      Tn[i] = T[i] + F * (T[i - 1] - 2 * T[i] + T[i + 1]) + dt * S;
+      Tn_fdm_1[i] = T_fdm_1[i] + F * (T_fdm_1[i - 1] - 2 * T_fdm_1[i] + T_fdm_1[i + 1]) + dt * S;
     }
     for (int i = 1; i < m_nbr_fdm - 1; i++)
     {
-      T[i] = Tn[i];
+      T_fdm_1[i] = Tn_fdm_1[i];
     }
     for (int i = 0; i < m_nbr_fdm; i++)
     {
-      wxLogDebug("T[%d]=%.1f", i, T[i]);
+      wxLogDebug("T[%d]=%.1f", i, T_fdm_1[i]);
     }
   }
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//wxFrameHeat::solve_fdm_2
+//Finite Differences Method
+//advection only
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void wxFrameHeat::solve_fdm_2()
+{
+  //number of cells
+  m_nbr_fdm = 7;
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+ //allocate solution vectors
+ /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  //FDM
+  T_fdm_2 = new float[m_nbr_fdm];
+  Tn_fdm_2 = new float[m_nbr_fdm];
+
+  //time step
+  float dt = 0.5f;
+  float dx = 1.0f;
+
+  //initial and boundary values
+  for (int i = 0; i < m_nbr_fdm; i++)
+  {
+    T_fdm_2[i] = 0;
+  }
+  T_fdm_2[0] = T_A;
+  T_fdm_2[m_nbr_fdm - 1] = T_B;
+
+  for (int i = 0; i < m_nbr_fdm; i++)
+  {
+    wxLogDebug("T[%d]=%.1f", i, T_fdm_2[i]);
+  }
+
+  int iter = 500;
+  float time = dt * (float)iter;
+  float U = 1.0f; //velocity
+  float C = U * dt / dx; //courant number <= 1
+  wxLogDebug("time=%.1f F=%.4f", time, C);
+  for (int n = 0; n < iter; n++)
+  {
+    for (int i = 1; i < m_nbr_fdm - 1; i++)
+    {
+      Tn_fdm_2[i] = T_fdm_2[i] - C * (T_fdm_2[i] - T_fdm_2[i - 1]);
+    }
+    for (int i = 1; i < m_nbr_fdm - 1; i++)
+    {
+      T_fdm_2[i] = Tn_fdm_2[i];
+    }
+    for (int i = 0; i < m_nbr_fdm; i++)
+    {
+      wxLogDebug("T[%d]=%.1f", i, T_fdm_2[i]);
+    }
+  }
+}
+
